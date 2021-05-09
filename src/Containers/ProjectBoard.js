@@ -162,7 +162,7 @@ export default function ProjectBoard() {
   const addProject = (event) => {
     event.preventDefault();
     if (!projectName) {
-      alert("Field is empty.")
+      alert("Field/s is/are empty.")
       return;
     }
     let newProject = {

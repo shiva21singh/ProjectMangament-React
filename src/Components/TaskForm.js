@@ -5,7 +5,7 @@ const StyledAddTaskForm = styled.form`
   align-items: center;
   margin: 6px;
   height: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 
 `;
 
@@ -18,7 +18,7 @@ export default function AddTaskForm(props) {
         placeholder="Title"
       />
       <br/>
-      <input
+      <textarea
         type="text"
         onChange={(event) => props.setTaskText(event.target.value)}
         placeholder="Text"

@@ -7,10 +7,12 @@ const StyledTaskContainer = styled.div`
   border: 1px solid black;
   padding: 5px;
   margin-top: 10px;
+  color: gray;
 `;
 const StyledTaskTitle = styled.span`
   text-decoration: underline;
   margin-botton: 4px;
+  color: black;
 `;
 const StyledCheckButton = styled.i`
   font-size: 16px;
@@ -27,7 +29,7 @@ export default function BoardTask(props) {
     <StyledTaskContainer >
       <StyledTaskTitle>{props.title}</StyledTaskTitle>
       <br/>
-      <span>{props.text}</span>
+      <small>{props.text}</small>
     </StyledTaskContainer>
     <StyledCheckButton
       status={props.status}

@@ -18,7 +18,7 @@ export default function AddFeatureForm(props) {
         placeholder="Title"
       />
       <br/>
-      <input
+      <textarea
         type="text"
         onChange={(event) => props.setFeatureText(event.target.value)}
         placeholder="Text"

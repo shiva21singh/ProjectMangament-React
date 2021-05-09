@@ -12,7 +12,7 @@ const StyledBoardFeature = styled.div`
 
   border: 1px solid black;
   border-radius: 4px 4px;
-  margin: 0 0 8px 0;
+  margin: 20px;
   min-height: 100px;
   color: black;
   display: flex;
@@ -85,7 +85,7 @@ export default function BoardFeature(props) {
   const saveTaskText = (event) => {
     event.preventDefault();
     if (!taskText || !taskTitle) {
-      alert("Field is empty.")
+      alert("Field/s is/are empty.")
       return;
     }
 
@@ -152,7 +152,7 @@ export default function BoardFeature(props) {
               />
             ) : (
               <StyledAddTaskButton onClick={() => toggleIsAddingTask()}>
-                <i className="fas fa-plus"></i>
+                <i className="fas fa-plus">Add task</i>
               </StyledAddTaskButton>
             )}
           </StyledBoardFeature>

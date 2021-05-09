@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const StyledColumnHeader = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   font-weight: 600;
   font-size: 20px;
 `;
@@ -19,14 +19,12 @@ const StyledContainer = styled.div`
 `;
 
 const StyledColumnBody = styled.div`
-  padding: 12px 16px;
   width: 250px;
   height: 400px;
   overflow-y: auto;
   border: 2px solid #50a0a0b0;
   border-radius: 3px 3px;
   margin-right: 10px;
-  margin-top: 20px;
   background-color: ${(props) =>
     props.snapshot.isDraggingOver ? "#DBF8A3" : "white"};
 `;
@@ -44,13 +42,14 @@ const StyledAddFeatureButton = styled.button`
 `;
 
 const StyledCrossButton = styled.i`
-  font-size: 16px;
-  color: ${props => props.status ? "green" : "red" };
+  font-size: 26px;
+  color: red ;
   cursor: pointer;
-  margin: 5px;
   &:hover {
     color: #69BC22;
   }
+  margin-top: 20px;
+  margin-right: 10px;
 `;
 
 
@@ -58,7 +57,6 @@ export default function BoardColumn(props) {
   const [isAddingFeature, setIsAddingFeature] = useState(false);
   const [featureText, setFeatureText] = useState("");
   const [featureTitle, setFeatureTitle] = useState("");
-  const [featureStatus, setFeatureStatus] = useState(false);
 
 
 
@@ -71,12 +69,13 @@ export default function BoardColumn(props) {
   const saveFeatureText = (event) => {
     event.preventDefault();
     if (!featureText || !featureTitle) {
-      alert("Field is empty.")
+      alert("Field/s is/are empty.")
       return;
     }
     props.addFeature(props.id, featureTitle, featureText);
     toggleIsAddingFeature();
-    setFeatureText("")
+    setFeatureText("");
+    setFeatureTitle("");
   };
 
 
@@ -86,16 +85,17 @@ export default function BoardColumn(props) {
       {(provided, snapshot) => {
         return (
           <StyledContainer>
-              <StyledColumnHeader>
+            <StyledColumnHeader>
               {props.column.title}
-                <StyledCrossButton onClick={() => props.setVisibility(props.column.title)} className="fas fa-times"> </StyledCrossButton>
-              </StyledColumnHeader >
+              <StyledCrossButton onClick={() => props.setVisibility(props.column.title)} className="fas fa-times"> </StyledCrossButton>
 
+            </StyledColumnHeader >
             <StyledColumnBody
               snapshot={snapshot}
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
+
               {provided.placeholder}
               {props.column.features.filter((feature) => feature.projectId === props.currentProjectId).map((feature, index) => {
                 return (
@@ -117,13 +117,10 @@ export default function BoardColumn(props) {
                 );
               })}
             </StyledColumnBody>
-            <p>Completed: ({props.column.features.filter((feature) => feature.projectId === props.currentProjectId && feature.status).length}/{props.column.features.filter((feature) => feature.projectId === props.currentProjectId).length})</p>
             {isAddingFeature ? (
               <AddFeatureForm
                 setFeatureText={setFeatureText}
                 setFeatureTitle={setFeatureTitle}
-                setFeatureStatus={setFeatureStatus}
-                featureStatus={featureStatus}
                 toggleIsAddingFeature={toggleIsAddingFeature}
                 saveFeatureText={saveFeatureText}
               />
