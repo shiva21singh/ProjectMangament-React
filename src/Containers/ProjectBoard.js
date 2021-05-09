@@ -92,7 +92,7 @@ export default function ProjectBoard() {
     {
       [uuidv4()]: {
         title: "Current",
-        features: [],
+        features: []
       },
       [uuidv4()]: {
         title: "IceBox",
@@ -120,7 +120,8 @@ export default function ProjectBoard() {
       projectId: currentProjectId,
       title: featureTitle,
       text: featureText,
-      status: false
+      status: false,
+      tasks: []
     };
     columnToUpdate.features.push(newFeature);
     setColumns({ ...columns });
@@ -143,7 +144,8 @@ export default function ProjectBoard() {
     projectId: feature.projectId,
     title: feature.title,
     text: feature.text,
-    status: !feature.status}
+    status: !feature.status,
+    tasks: feature.tasks}
      :
      feature
    )
@@ -174,7 +176,23 @@ export default function ProjectBoard() {
     setProjectName("");
   }
 
+  const addTask = (columnId, featureIndex, taskTitle, taskText) => {
+    console.log(columnId, featureIndex, taskTitle, taskText)
+    let columnToUpdate = columns[columnId];
+    let featureToUpdate = columnToUpdate.features[featureIndex]
 
+    let newTask = {
+      id: uuidv4(),
+      title: taskTitle,
+      text: taskText,
+      status: false
+    };
+    let addedtask = featureToUpdate.tasks
+    addedtask.push(newTask)
+    console.log(featureToUpdate.title);
+    setColumns({ ...columns });
+
+  }
   return (
     <div>
     <StyledProjectSection>
@@ -209,6 +227,7 @@ export default function ProjectBoard() {
             removeFeature={removeFeature}
             toggleStatus={toggleStatus}
             currentProjectId={currentProjectId}
+            addTask={addTask}
           />
 
           </DragDropContext>

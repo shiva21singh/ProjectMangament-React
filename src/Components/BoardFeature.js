@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
 import {CopyToClipboard} from "react-copy-to-clipboard";
-
+import BoardTask from "../Components/BoardTask";
+import AddTaskForm from "../Components/TaskForm";
 
 const StyledBoardFeature = styled.div`
   background-color: ${(props) =>
@@ -66,7 +67,40 @@ const StyledCopyToClipBoardChild = styled.div`
   color: #ffffff;
 `;
 
+const StyledAddTaskButton = styled.button`
+  border: none;
+  background: none;
+  display: block;
+  margin: 8px auto;
+  font-size: 16px;
+  &:hover {
+    color: #69BC22;
+    cursor: pointer;
+  }
+`;
 export default function BoardFeature(props) {
+
+  const [isAddingTask, setIsAddingTask] = useState(false);
+  const [taskText, setTaskText] = useState("");
+  const [taskTitle, setTaskTitle] = useState("");
+
+  const toggleIsAddingTask = () => {
+    setIsAddingTask(!isAddingTask);
+  };
+
+  const saveTaskText = (event) => {
+    event.preventDefault();
+    if (!taskText || !taskTitle) {
+      alert("Field is empty.")
+      return;
+    }
+
+    props.addTask(props.columnId, props.index, taskTitle, taskText);
+    toggleIsAddingTask();
+    setTaskText("");
+    setTaskTitle("");
+  };
+
   return (
     <Draggable key={props.id} draggableId={`${props.id}`} index={props.index}>
       {(provided, snapshot) => {
@@ -100,10 +134,46 @@ export default function BoardFeature(props) {
             >{props.status ? " Complete" :" Not Complete"}
             </StyledCheckButton>
 
+
+            <BoardTask
+              columnId={props.columnId}
+              featureId={props.id}
+              addTask={props.addTask}
+              featureIndex={props.index}
+              featureTasks={props.tasks}
+            />
+
             <StyledTrashButton
               onClick={() => props.removeFeature(props.columnId, props.id)}
               className="fa fa-trash"
             ></StyledTrashButton>
+
+
+            <p>Tasks: ({props.feature.tasks.filter((task) => task.status).length}/{props.feature.tasks.length})</p>
+
+            {props.feature.tasks.map((task, index) => {
+              return (
+                <div key={task.id}>
+                <BoardTask
+                id={task.id}
+                title={task.title}
+                text={task.text}
+                />
+                </div>
+              );
+            })}
+            {isAddingTask ? (
+              <AddTaskForm
+                setTaskText={setTaskText}
+                setTaskTitle={setTaskTitle}
+                toggleIsAddingTask={toggleIsAddingTask}
+                saveTaskText={saveTaskText}
+              />
+            ) : (
+              <StyledAddTaskButton onClick={() => toggleIsAddingTask()}>
+                <i className="fas fa-plus"></i>
+              </StyledAddTaskButton>
+            )}
           </StyledBoardFeature>
         );
       }}

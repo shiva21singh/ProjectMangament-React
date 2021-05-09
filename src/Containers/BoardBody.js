@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import BoardColumn from "../Components/BoardColumn";
 import styled from "styled-components";
 
@@ -89,6 +89,7 @@ export default function BoardBody(props) {
                     column={column}
                     setVisibility={setVisibility}
                     id={id}
+                    addTask={props.addTask}
                   ></BoardColumn>
                   }
                 </div>

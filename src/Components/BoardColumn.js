@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import BoardFeature from "../Components/BoardFeature";
-
 import AddFeatureForm from "../Components/FeatureForm";
 import { Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
@@ -106,10 +105,13 @@ export default function BoardColumn(props) {
                       index={index}
                       title={feature.title}
                       text={feature.text}
-                      status={feature.status}
                       columnId={props.id}
                       removeFeature={props.removeFeature}
                       toggleStatus={props.toggleStatus}
+                      column={props.column}
+                      addTask={props.addTask}
+                      feature={feature}
+
                     />
                   </div>
                 );
@@ -127,7 +129,7 @@ export default function BoardColumn(props) {
               />
             ) : (
               <StyledAddFeatureButton onClick={() => toggleIsAddingFeature()}>
-                <i className="fas fa-plus"></i>
+                <i className="fas fa-plus"> Add Feature </i>
               </StyledAddFeatureButton>
             )}
           </StyledContainer>
