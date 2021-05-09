@@ -8,7 +8,8 @@ import AddTaskForm from "../Components/TaskForm";
 const StyledBoardFeature = styled.div`
   background-color: ${(props) =>
     props.snapshot.isDragging ? "white" : "#E5FFB3"};
-  padding: 10px;
+  padding: 15px 10px 10px 10px;
+
   border: 1px solid black;
   border-radius: 4px 4px;
   margin: 0 0 8px 0;
@@ -21,6 +22,7 @@ const StyledBoardFeature = styled.div`
   font-weight: 600;
   font-size: 18px;
   position: relative;
+  overflow-wrap: break-word;
 `;
 
 const StyledTrashButton = styled.i`
@@ -33,15 +35,7 @@ const StyledTrashButton = styled.i`
     color: #69BC22;
   }
 `;
-const StyledCheckButton = styled.i`
-  font-size: 16px;
-  color: ${props => props.status ? "green" : "red" };
-  cursor: pointer;
-  margin: 5px;
-  &:hover {
-    color: #69BC22;
-  }
-`;
+
 const StyledCopyButton = styled.i`
   font-size: 16px;
   cursor: pointer;
@@ -126,23 +120,6 @@ export default function BoardFeature(props) {
               {props.text}
             </StyledCopyToClipBoardParent>
 
-
-            <StyledCheckButton
-              status={props.status}
-              onClick={() => props.toggleStatus(props.columnId, props.id)}
-              className={`fa ${props.status ? "fa-check-square-o" : "fa-square-o"}`}
-            >{props.status ? " Complete" :" Not Complete"}
-            </StyledCheckButton>
-
-
-            <BoardTask
-              columnId={props.columnId}
-              featureId={props.id}
-              addTask={props.addTask}
-              featureIndex={props.index}
-              featureTasks={props.tasks}
-            />
-
             <StyledTrashButton
               onClick={() => props.removeFeature(props.columnId, props.id)}
               className="fa fa-trash"
@@ -158,6 +135,10 @@ export default function BoardFeature(props) {
                 id={task.id}
                 title={task.title}
                 text={task.text}
+                status={task.status}
+                columnId={props.columnId}
+                toggleStatus={props.toggleStatus}
+                featureIndex={props.index}
                 />
                 </div>
               );

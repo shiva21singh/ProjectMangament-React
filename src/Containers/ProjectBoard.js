@@ -88,6 +88,7 @@ export default function ProjectBoard() {
 
   const[projectName, setProjectName] = useState("")
 
+
   const [columns, setColumns] = useState(
     {
       [uuidv4()]: {
@@ -136,20 +137,19 @@ export default function ProjectBoard() {
     setColumns({ ...columns });
   };
 
-  const toggleStatus = (columnId, featureId) => {
+  const toggleStatus = (columnId, featureIndex, taskId) => {
     let columnToUpdate = columns[columnId];
-    let newFeatures = columnToUpdate.features.map((feature) => feature.id === featureId ?
+    let featureToUpdate = columnToUpdate.features[featureIndex]
+    let newTask = featureToUpdate.tasks.map((task) => task.id === taskId ?
     {
-    id: feature.id,
-    projectId: feature.projectId,
-    title: feature.title,
-    text: feature.text,
-    status: !feature.status,
-    tasks: feature.tasks}
-     :
-     feature
-   )
-    columnToUpdate.features = newFeatures;
+      id: task.id,
+      title: task.title,
+      text: task.text,
+      status: !task.status
+    } :
+      task
+    )
+    featureToUpdate.tasks = newTask;
     setColumns({ ...columns });
   };
 
@@ -157,8 +157,6 @@ export default function ProjectBoard() {
     setCurrentProjectId(project.projectId)
     setCurrentProjectName(project.projectName)
 
-    console.log(currentProjectId)
-    console.log(currentProjectName)
   }
 
   const addProject = (event) => {
@@ -177,7 +175,6 @@ export default function ProjectBoard() {
   }
 
   const addTask = (columnId, featureIndex, taskTitle, taskText) => {
-    console.log(columnId, featureIndex, taskTitle, taskText)
     let columnToUpdate = columns[columnId];
     let featureToUpdate = columnToUpdate.features[featureIndex]
 
@@ -189,7 +186,6 @@ export default function ProjectBoard() {
     };
     let addedtask = featureToUpdate.tasks
     addedtask.push(newTask)
-    console.log(featureToUpdate.title);
     setColumns({ ...columns });
 
   }
