@@ -25,7 +25,7 @@ const StyledBoardBody = styled.div`
   background-color: #E5FFB3;
   overflow-x: auto;
   border: 1px solid black;
-  width: 870px;
+  width: 1000px;
 `;
 
 const StyledSidePanel = styled.div`

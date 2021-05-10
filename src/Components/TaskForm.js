@@ -21,7 +21,7 @@ export default function AddTaskForm(props) {
       <textarea
         type="text"
         onChange={(event) => props.setTaskText(event.target.value)}
-        placeholder="Text"
+        placeholder="Description"
       />
 
       <br/>

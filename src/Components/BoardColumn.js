@@ -19,7 +19,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledColumnBody = styled.div`
-  width: 250px;
+  width: 280px;
   height: 400px;
   overflow-y: auto;
   border: 2px solid #50a0a0b0;
